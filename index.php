@@ -46,13 +46,14 @@
         </div>
 
         <div class="form-group">
-            <label for="name_field">Cognome:</label>
-		<input id="name_field" type="text" name="cognome" placeholder="inserisci il cognome">
+            <label for="cognome_field">Cognome:</label>
+		<input id="cognome_field" type="text" name="cognome" placeholder="inserisci il cognome">
         </div>
         
         <div class="form-group">
-            <label for="name_field">Action:</label>
-		<select id="name_field" name="action">
+            <label for="action_field">Action:</label>
+		<select id="action_field" name="action">
+      <option disable selected>Seleziona un'azione</option>
 			<option value="add">Aggiungi persona</option>
 			<option value="delete">Rimuovi persona</option>
 		</select>
@@ -64,6 +65,39 @@
 		<input type="submit" value="Esegui">
        </div>
 	</form>
+  <script>
+    function validateForm(event) {
+      clearErrorMessages();
+
+      const nomeField = document.querySelector('input[name="nome"]');
+      const cognomeField = document.querySelector('input[name="cognome"]');
+      const actionField = document.querySelector('select[name="action"]');
+
+      let isValid = true;
+
+      if (!nomeField.value.trim()) {
+        showError(nomeField, 'Il campo Nome è obbligatorio');
+        isValid = false;
+      }
+
+      if (!cognomeField.value.trim()) {
+        showError(cognomeField, 'Il campo Cognome è obbligatorio');
+        isValid = false;
+      }
+
+      if (actionField.value === "Seleziona un'azione") {
+        showError(actionField, 'Devi selezionare un azione');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        event.preventDefault();
+        return false;
+      }
+
+      return true;
+    }
+  </script>  
 </body>
 </html>
 </html>
