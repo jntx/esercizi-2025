@@ -32,12 +32,19 @@
       border: none;
       cursor: pointer;
     }
+
+    .error-message {
+  color: red;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
     </style>
 
 
 </head>
 <body>
-<form action="<?=$_SERVER["PHP_SELF"]?>">
+<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" onsubmit="return validateForm(event)">
 		<input type="hidden" name="section" value="<?=basename($_SERVER["PHP_SELF"])?>">
 
         <div class="form-group">
@@ -65,39 +72,47 @@
 		<input type="submit" value="Esegui">
        </div>
 	</form>
+
   <script>
-    function validateForm(event) {
-      clearErrorMessages();
+   function validateForm(event) {
+    // clearErrorMessages();
 
-      const nomeField = document.querySelector('input[name="nome"]');
-      const cognomeField = document.querySelector('input[name="cognome"]');
-      const actionField = document.querySelector('select[name="action"]');
+    const nomeField = document.querySelector('input[name="nome"]');
+    const cognomeField = document.querySelector('input[name="cognome"]');
+    const actionField = document.querySelector('select[name="action"]');
+    let isValid = true;
 
-      let isValid = true;
-
-      if (!nomeField.value.trim()) {
-        showError(nomeField, 'Il campo Nome è obbligatorio');
-        isValid = false;
-      }
-
-      if (!cognomeField.value.trim()) {
-        showError(cognomeField, 'Il campo Cognome è obbligatorio');
-        isValid = false;
-      }
-
-      if (actionField.value === "Seleziona un'azione") {
-        showError(actionField, 'Devi selezionare un azione');
-        isValid = false;
-      }
-
-      if (!isValid) {
-        event.preventDefault();
-        return false;
-      }
-
-      return true;
+    if (!nomeField.value.trim()) {
+      showError(nomeField, "Il campo Nome è obbligatorio");
+      isValid = false;
     }
-  </script>  
+
+    if (!cognomeField.value.trim()) {
+      showError(cognomeField, "Il campo Cognome è obbligatorio");
+      isValid = false;
+    }
+
+    if (actionField.value === "Seleziona un'azione") {
+      showError(actionField, "Devi selezionare un'azione");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      event.preventDefault();
+      return false;
+    }
+
+    return true;
+  }
+
+  function showError(inputElement, message) {
+    const error = document.createElement("div");
+    error.classList.add("error-message");
+    error.textContent = message;
+    inputElement.insertAdjacentElement("afterend", error);
+  }
+
+</script>
 </body>
 </html>
 </html>
