@@ -39,12 +39,18 @@
   margin-top: 3px;
 }
 
+.success-message {
+  color: green;
+  margin-top: 8px;
+}
+
+
     </style>
 
 
 </head>
 <body>
-<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" onsubmit="return validateForm(event)">
+<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return validateForm(event)">
 		<input type="hidden" name="section" value="<?=basename($_SERVER["PHP_SELF"])?>">
 
         <div class="form-group">
@@ -73,13 +79,22 @@
        </div>
 	</form>
 
+  <div id="result" class="message-box"></div>
+
+
   <script>
    function validateForm(event) {
+     event.preventDefault();
     // clearErrorMessages();
 
     const nomeField = document.querySelector('input[name="nome"]');
     const cognomeField = document.querySelector('input[name="cognome"]');
     const actionField = document.querySelector('select[name="action"]');
+     const resultDiv = document.getElementById("result");
+
+     resultDiv.textContent = "";
+
+
     let isValid = true;
 
     if (!nomeField.value.trim()) {
@@ -92,25 +107,58 @@
       isValid = false;
     }
 
-    if (actionField.value === "Seleziona un'azione") {
-      showError(actionField, "Devi selezionare un'azione");
-      isValid = false;
-    }
-
-    if (!isValid) {
-      event.preventDefault();
-      return false;
-    }
-
-    return true;
+   if (!actionField.value.trim() || actionField.value === "Seleziona un'azione") {
+    showError(actionField, "Devi selezionare un'azione");
+    isValid = false;
   }
 
-  function showError(inputElement, message) {
-    const error = document.createElement("div");
-    error.classList.add("error-message");
-    error.textContent = message;
-    inputElement.insertAdjacentElement("afterend", error);
+  if (!isValid) {
+    return false;
   }
+
+  const nome = nomeField.value.trim();
+  const cognome = cognomeField.value.trim();
+  const azione = actionField.value;
+  const target = azione === "add" ? "add.php" : "remove.php";
+
+  fetch(target, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "nome=" + encodeURIComponent(nome) + "&cognome=" + encodeURIComponent(cognome)
+  })
+    .then(response => response.json())
+    .then(data => {
+      resultDiv.innerHTML = "";
+      if (data.success === false) {
+        showError(resultDiv, data.message || "Si è verificato un errore.");
+      } else {
+        const successMsg = document.createElement("div");
+        successMsg.classList.add("success-message");
+        successMsg.textContent = data.message || "Operazione completata.";
+        resultDiv.appendChild(successMsg);
+      }
+    })
+    .catch(() => {
+      showError(resultDiv, "Errore di connessione con il server.");
+    });
+    
+    function showError(inputElement, message) {
+  // Remove previous error if any
+  const oldError = inputElement.parentNode.querySelector('.error-message');
+  if (oldError) oldError.remove();
+
+  // Create a new error message
+  const error = document.createElement('div');
+  error.classList.add('error-message');
+  error.textContent = message;
+
+  // Insert it right after the input
+  inputElement.insertAdjacentElement('afterend', error);
+}
+
+
+  return false;
+}
 
 </script>
 </body>
