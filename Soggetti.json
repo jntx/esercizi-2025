@@ -1,54 +1,77 @@
 [
     {
         "nome": "Gianluca",
-        "cognome": "Luigi"
+        "cognome": "Luigi",
+        "ID": "101"
     },
     {
         "nome": "Luca",
-        "cognome": "Bianchi"
+        "cognome": "Bianchi",
+        "ID": "102"
     },
     {
         "nome": "Giulia",
-        "cognome": "Verdi"
+        "cognome": "Verdi",
+        "ID": "103"
     },
     {
         "nome": "Saheed",
-        "cognome": "Oyerinde"
+        "cognome": "Oyerinde",
+        "ID": "104"
     },
     {
         "nome": "Totti",
-        "cognome": "Francesco"
+        "cognome": "Francesco",
+        "ID": "105"
     },
     {
         "nome": "Messi",
-        "cognome": "Lionel"
+        "cognome": "Lionel",
+        "ID": "106"
     },
     {
         "nome": "Neymar",
-        "cognome": "Da Silvia Santos Junior"
+        "cognome": "Da Silvia Santos Junior",
+        "ID": "107"
     },
     {
         "nome": "Matteo",
-        "cognome": "Bazzi"
+        "cognome": "Bazzi",
+        "ID": "108"
     },
     {
         "nome": "Paolo",
-        "cognome": "Banchero"
+        "cognome": "Banchero",
+        "ID": "109"
     },
     {
         "nome": "Stephen",
-        "cognome": "Curry"
+        "cognome": "Curry",
+        "ID": "110"
     },
     {
         "nome": "Linda",
-        "cognome": "Ferri"
+        "cognome": "Ferri",
+        "ID": "111"
     },
     {
         "nome": "francesca",
-        "cognome": "Calderoni"
+        "cognome": "Calderoni",
+        "ID": "112"
     },
     {
         "nome": "Test",
-        "cognome": "Person"
+        "cognome": "Person",
+        "ID": "113"
+    },
+    {
+        "nome": "type",
+        "cognome": "Person",
+        "ID": "124"
+    },
+    {
+        "nome": "type",
+        "cognome": "Person",
+        "ID": "125"
     }
 ]

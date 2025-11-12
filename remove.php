@@ -3,9 +3,10 @@ header('Content-Type: application/json');
 
 $nome = $_POST['nome'] ?? '';
 $cognome = $_POST['cognome'] ?? '';
+$id =$_POST['id'] ??'';
 
-if ($nome === '' || $cognome === '') {
-    echo json_encode(["message" => "Inserisci nome e cognome!"]);
+if ($nome === '' || $cognome === '' || $id === '') {
+    echo json_encode(["message" => "Inserisci informazioni obbligatori!"]);
     exit;
 }
 
@@ -17,7 +18,7 @@ $newData = [];
 $removed = false;
 
 foreach ($data as $person) {
-    if ($person['nome'] !== $nome || $person['cognome'] !== $cognome) {
+    if ($person['nome'] !== $nome || $person['cognome'] !== $cognome || $person['ID'] !== $id) {
         $newData[] = $person;
     } else {
         $removed = true;
@@ -25,7 +26,7 @@ foreach ($data as $person) {
 }
 
 file_put_contents($file, json_encode($newData, JSON_PRETTY_PRINT));
-
+ 
 if ($removed) {
     echo json_encode(["message" => "Soggetto rimosso con successo!"]);
 } else {

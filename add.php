@@ -3,17 +3,17 @@ header('Content-Type: application/json');
 
 $new_nome = $_POST['nome'] ?? $_GET['nome'] ?? null;
 $new_cognome = $_POST['cognome'] ?? $_GET['cognome'] ?? null;
+$new_id = $_POST['id'] ?? $_GET['id'] ?? null;
 
-
-if (!$new_nome || !$new_cognome) {
-    echo json_encode(["success" => false, "message" => "Il campo Nome o Cognome è obbligatorio!"]);
+if (!$new_nome || !$new_cognome || !$new_id) {
+    echo json_encode(["success" => false, "message" => "Per favore, inserisci informazioni obbligatori!"]);
     exit;
 }
 
 $file = 'Soggetti.json';
 $data = json_decode(file_get_contents($file), true);
 
-$data[] = ["nome" => $new_nome, "cognome" => $new_cognome];
+$data[] = ["nome" => $new_nome, "cognome" => $new_cognome,"ID"=> $new_id];
 
 file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
 

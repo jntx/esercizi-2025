@@ -44,6 +44,10 @@
   margin-top: 8px;
 }
 
+.id-field {
+   width: 80px;
+}
+
 
     </style>
 
@@ -61,6 +65,11 @@
         <div class="form-group">
             <label for="cognome_field">Cognome:</label>
 		<input id="cognome_field" type="text" name="cognome" placeholder="inserisci il cognome">
+        </div>
+
+        <div class="form-group">
+            <label for="id_field">ID:</label>
+		<input id="id_field" type="number" name="id" placeholder="inserisci ID">
         </div>
         
         <div class="form-group">
@@ -89,6 +98,7 @@
 
     const nomeField = document.querySelector('input[name="nome"]');
     const cognomeField = document.querySelector('input[name="cognome"]');
+    const idField = document.querySelector('input[name="id"]');
     const actionField = document.querySelector('select[name="action"]');
      const resultDiv = document.getElementById("result");
 
@@ -107,6 +117,11 @@
       isValid = false;
     }
 
+     if (!idField.value.trim()) {
+      showError(idField, "ID è obbligatorio");
+      isValid = false;
+    }
+
    if (!actionField.value.trim() || actionField.value === "Seleziona un'azione") {
     showError(actionField, "Devi selezionare un'azione");
     isValid = false;
@@ -117,6 +132,7 @@
   }
 
   const nome = nomeField.value.trim();
+  const id = idField.value.trim();
   const cognome = cognomeField.value.trim();
   const azione = actionField.value;
   const target = azione === "add" ? "add.php" : "remove.php";
@@ -124,7 +140,7 @@
   fetch(target, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: "nome=" + encodeURIComponent(nome) + "&cognome=" + encodeURIComponent(cognome)
+    body: "nome=" + encodeURIComponent(nome) + "&cognome=" + encodeURIComponent(cognome) + "&id=" + encodeURIComponent(id)
   })
     .then(response => response.json())
     .then(data => {
@@ -141,18 +157,15 @@
     .catch(() => {
       showError(resultDiv, "Errore di connessione con il server.");
     });
-    
+
     function showError(inputElement, message) {
-  // Remove previous error if any
   const oldError = inputElement.parentNode.querySelector('.error-message');
   if (oldError) oldError.remove();
 
-  // Create a new error message
   const error = document.createElement('div');
   error.classList.add('error-message');
   error.textContent = message;
 
-  // Insert it right after the input
   inputElement.insertAdjacentElement('afterend', error);
 }
 
