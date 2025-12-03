@@ -13,12 +13,12 @@ if (!$new_nome || !$new_cognome || !$new_id) {
 $file = 'Soggetti.json';
 $data = json_decode(file_get_contents($file), true);
 
-$Takenid = [];
-foreach ($data as $soggetto) {
-    $Takenid[] = $soggetto["ID"];
-}
+$Takenid = array_map(function($soggetto) {
+              return $soggetto["ID"];
+           }, $data);
 
-while (in_array($new_id, $Takenid)) {
+
+if (in_array($new_id, $Takenid)) {
     echo json_encode([
         "success" => false,
         "message" => "ID già esistente, scegli un altro!"

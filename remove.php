@@ -28,7 +28,13 @@ foreach ($data as $person) {
 file_put_contents($file, json_encode($newData, JSON_PRETTY_PRINT));
  
 if ($removed) {
-    echo json_encode(["message" => "Soggetto rimosso con successo!"]);
+    echo json_encode([
+        "success" => true,
+        "message" => "Soggetto rimosso con successo!"
+    ]);
 } else {
-    echo json_encode(["message" => "Soggetto non trovato!"]);
+    echo json_encode([
+        "success" => false,
+        "message" => "Soggetto non trovato!"
+    ]);
 }

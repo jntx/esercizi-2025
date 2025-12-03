@@ -86,9 +86,8 @@
        <div>
 		<input type="submit" value="Esegui">
        </div>
+      <div id="result" class="message-box"></div>
 	</form>
-
-  <div id="result" class="message-box"></div>
 
 
   <script>
@@ -103,6 +102,14 @@
      const resultDiv = document.getElementById("result");
 
      resultDiv.textContent = "";
+
+     document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+
+
+     const oldMessageBox = document.getElementById('messageBox');
+    if (oldMessageBox) {
+        oldMessageBox.remove();
+    }
 
 
     let isValid = true;
@@ -152,6 +159,10 @@
         successMsg.classList.add("success-message");
         successMsg.textContent = data.message || "Operazione completata.";
         resultDiv.appendChild(successMsg);
+            nomeField.value = "";
+            cognomeField.value = "";
+            idField.value = "";
+            actionField.selectedIndex = 0;
       }
     })
     .catch(() => {
@@ -171,6 +182,7 @@
 
 
   return false;
+
 }
 
 </script>
